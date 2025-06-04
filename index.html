@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVA | AI Development Platform</title>
+  <style>
+    /* Professional Black & White Theme */
+    :root {
+      --black: #111111;
+      --white: #ffffff;
+      --gray-1: #f5f5f5;
+      --gray-2: #e0e0e0;
+      --accent: #3a86ff;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--white);
+      color: var(--black);
+      margin: 0;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header */
+    header {
+      padding: 6rem 0 8rem;
+      background: var(--gray-1);
+      border-bottom: 1px solid var(--gray-2);
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+    }
+
+    .hero-text {
+      flex: 1;
+    }
+
+    .hero-image {
+      flex: 1;
+      background: url('nova_image.png') no-repeat center;
+      background-size: contain;
+      height: 400px;
+      position: relative;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* New floating animation */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    /* New pulse animation for friendly feel */
+    .hero-image::after {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      right: -20px;
+      bottom: -20px;
+      background: radial-gradient(circle, rgba(58, 134, 255, 0.1) 0%, rgba(58, 134, 255, 0) 70%);
+      border-radius: 50%;
+      opacity: 0;
+      animation: pulse 3s ease-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.4;
+      }
+      100% {
+        transform: scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* New floating dots animation */
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 30%, var(--accent) 2px, transparent 3px),
+        radial-gradient(circle at 80% 20%, var(--accent) 2px, transparent 3px),
+        radial-gradient(circle at 30% 70%, var(--accent) 2px, transparent 3px),
+        radial-gradient(circle at 70% 80%, var(--accent) 2px, transparent 3px);
+      background-size: 100% 100%;
+      opacity: 0.3;
+      animation: dots-float 8s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes dots-float {
+      0%, 100% {
+        transform: translate(0, 0);
+      }
+      25% {
+        transform: translate(-5px, 5px);
+      }
+      50% {
+        transform: translate(5px, -5px);
+      }
+      75% {
+        transform: translate(5px, 5px);
+      }
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin: 0 0 1.5rem;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: #555;
+      max-width: 600px;
+      margin-bottom: 3rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: var(--black);
+      color: var(--white);
+      border-radius: 4px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: 2px solid var(--black);
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      background: transparent;
+      color: var(--black);
+    }
+
+    /* Enhanced Client Logos Section */
+    .clients {
+      padding: 5rem 0;
+      text-align: center;
+      border-bottom: 1px solid var(--gray-2);
+    }
+
+    .client-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4rem;
+      margin-top: 3rem;
+      align-items: center;
+    }
+
+    .logo-container {
+      position: relative;
+      width: 160px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .client-logo {
+      height: 60px;
+      max-width: 160px;
+      object-fit: contain;
+      opacity: 0.8;
+      filter: grayscale(100%);
+      transition: all 0.3s ease;
+    }
+
+    .logo-overlay {
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--black);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+    }
+
+    .logo-container:hover {
+      transform: translateY(-5px);
+    }
+
+    .logo-container:hover .client-logo {
+      opacity: 1;
+      filter: grayscale(0);
+    }
+
+    .logo-container:hover .logo-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Testimonials */
+    .testimonials {
+      padding: 6rem 0;
+      background: var(--gray-1);
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      padding: 2.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--gray-2);
+      position: relative;
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 1.5rem;
+      left: 2rem;
+      font-size: 4rem;
+      color: var(--gray-2);
+      font-family: serif;
+      line-height: 1;
+    }
+
+    .testimonial-content {
+      margin-bottom: 1.5rem;
+      font-style: italic;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--gray-2);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .author-info h4 {
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .author-info p {
+      margin: 0.25rem 0 0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    /* Features */
+    .features {
+      padding: 6rem 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      padding: 2.5rem;
+      border: 1px solid var(--gray-2);
+      border-radius: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      border-color: var(--accent);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+    }
+
+    /* Pricing */
+    .pricing {
+      padding: 6rem 0;
+      background: var(--gray-1);
+      border-top: 1px solid var(--gray-2);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--gray-2);
+      position: relative;
+    }
+
+    .pricing-card.popular {
+      border: 2px solid var(--accent);
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      padding: 0.3rem 1.5rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .pricing-card h3 {
+      margin-top: 0;
+    }
+
+    .pricing-card .price {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 1.5rem 0;
+      color: var(--black);
+    }
+
+    .pricing-card .price span {
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .pricing-card ul {
+      padding-left: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .pricing-card li {
+      margin-bottom: 0.8rem;
+    }
+
+    /* Waitlist Section */
+    .waitlist-section {
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    .waitlist-button {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: var(--accent);
+      color: var(--white);
+      border-radius: 4px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: box-shadow 0.3s ease-in-out;
+      border: 2px solid var(--accent);
+      cursor: pointer;
+    }
+
+    .waitlist-button:hover {
+      box-shadow: 0 0 15px rgba(58, 134, 255, 0.7);
+    }
+
+    .waitlist-button.glowing {
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 5px rgba(58, 134, 255, 0.5);
+      }
+      100% {
+        box-shadow: 0 0 15px rgba(58, 134, 255, 0.8);
+      }
+    }
+
+    /* Footer */
+    footer {
+      padding: 4rem 0;
+      text-align: center;
+      background: var(--black);
+      color: var(--white);
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="hero">
+        <div class="hero-text">
+          <h1>Build AI Assistants<br>Without the Complexity</h1>
+          <p class="subtitle">The professional platform for creating custom AI trained on your data. No PhD required.</p>
+          <a href="#waitlist" id="get-started-button" class="cta-button">Get Started</a>
+        </div>
+        <div class="hero-image"></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="clients">
+    <div class="container">
+      <h2 style="text-align: center; font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; color: #666;">Trusted by innovative teams</h2>
+      <div class="client-logos">
+        <div class="logo-container">
+          <img src="techcorp_co.png" alt="TechCorp" class="client-logo">
+          <div class="logo-overlay">TechCorp</div>
+        </div>
+        <div class="logo-container">
+          <img src="legalai_co.png" alt="LegalAI" class="client-logo">
+          <div class="logo-overlay">LegalAI</div>
+        </div>
+        <div class="logo-container">
+          <img src="globalbank_co.png" alt="GlobalBank" class="client-logo">
+          <div class="logo-overlay">GlobalBank</div>
+        </div>
+        <div class="logo-container">
+          <img src="healthplus_company.png" alt="HealthPlus" class="client-logo">
+          <div class="logo-overlay">HealthPlus</div>
+        </div>
+        <div class="logo-container">
+          <img src="shopeasy_co.png" alt="ShopEasy" class="client-logo">
+          <div class="logo-overlay">ShopEasy</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="container">
+      <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 1rem;">What Our Clients Say</h2>
+      <p style="text-align: center; max-width: 600px; margin: 0 auto; color: #555;">Don't take our word for it - hear from businesses transforming with NOVA AI</p>
+
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            NOVA reduced our contract review time by 80%. The implementation was seamless and their support team is exceptional.
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar" style="background-image: url('techcorp_model.png')"></div>
+            <div class="author-info">
+              <h4>Sarah Chen</h4>
+              <p>General Counsel, TechCorp</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            We deployed a customer support AI in 3 days that handles 60% of inquiries. The ROI was immediate and substantial.
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar" style="background-image: url('shopeasy_model.png')"></div>
+            <div class="author-info">
+              <h4>Michael Rodriguez</h4>
+              <p>VP Operations, ShopEasy</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            As a healthcare provider, data privacy was critical. NOVA's HIPAA-compliant solution gave us peace of mind.
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar" style="background-image: url('healthplus_model.png')"></div>
+            <div class="author-info">
+              <h4>Dr. Emily Park</h4>
+              <p>CMO, HealthPlus</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Enterprise-Grade</h3>
+        <p>Secure, scalable infrastructure designed for business-critical applications.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Data Privacy</h3>
+        <p>Your data never leaves your control. Compliant with GDPR and HIPAA.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>Seamless Integration</h3>
+        <p>Connect with your existing tools via API or pre-built connectors.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing">
+    <div class="container">
+      <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 1rem;">Simple, Transparent Pricing</h2>
+      <p style="text-align: center; max-width: 600px; margin: 0 auto 3rem; color: #555;">Start small and scale as you grow</p>
+
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3 style="margin-top: 0;">Explorer</h3>
+          <p class="price">
+            $19<span style="font-size: 1rem; color: #666;">/month</span>
+          </p>
+          <ul>
+            <li>5 fine-tuning jobs/month</li>
+            <li>Basic chatbot deployment</li>
+            <li>Community support</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card popular">
+          <div class="popular-badge">MOST POPULAR</div>
+          <h3 style="margin-top: 0;">Builder</h3>
+          <p class="price">
+            $99<span style="font-size: 1rem; color: #666;">/month</span>
+          </p>
+          <ul>
+            <li>20 fine-tuning jobs/month</li>
+            <li>Slack/WhatsApp integration</li>
+            <li>Priority email support</li>
+            <li>API access</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card">
+          <h3 style="margin-top: 0;">Enterprise</h3>
+          <p class="price">
+            Custom
+          </p>
+          <ul>
+            <li>Unlimited jobs</li>
+            <li>HIPAA/GDPR compliance</li>
+            <li>Dedicated support</li>
+            <li>White-label solutions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="waitlist" class="pricing" style="padding-bottom: 6rem; background: var(--gray-1);">
+    <div class="container waitlist-section">
+      <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">🚧 Beta Slots Are Full</h3>
+      <p style="max-width: 600px; margin: 0 auto 2rem; color: #555;">
+        We've reached capacity for our initial beta program, but you can join the waitlist for early access.
+      </p>
+      <a href="https://tally.so/r/nG4Wpp" target="_blank" class="waitlist-button" id="join-waitlist-button">
+        Join Waitlist
+      </a>
+    </div>
+  </section>
+
+  <section style="padding: 6rem 0; text-align: center; background: var(--gray-1); border-top: 1px solid var(--gray-2);">
+    <div class="container">
+      <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Ready to Transform Your Business?</h2>
+      <p style="max-width: 600px; margin: 0 auto 3rem; color: #555;">Join 500+ forward-thinking companies using NOVA AI</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2024 NOVA AI. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const getStartedButton = document.getElementById('get-started-button');
+      const waitlistSection = document.getElementById('waitlist');
+      const joinWaitlistButton = document.getElementById('join-waitlist-button');
+
+      getStartedButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        waitlistSection.scrollIntoView({ behavior: 'smooth' });
+      });
+
+      function handleScroll() {
+        const waitlistButtonRect = joinWaitlistButton.getBoundingClientRect();
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+        if (waitlistButtonRect.top < viewportHeight && waitlistButtonRect.bottom > 0) {
+          joinWaitlistButton.classList.add('glowing');
+        } else {
+          joinWaitlistButton.classList.remove('glowing');
+        }
+      }
+
+      window.addEventListener('scroll', handleScroll);
+      handleScroll(); // Initial check on load
+    });
+  </script>
+</body>
+</html>
